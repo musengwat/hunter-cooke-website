@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "article_collections",
+  "info": {
+    "singularName": "article-collection",
+    "pluralName": "article-collections",
+    "displayName": "Article Collection"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "publication": {
+      "type": "string",
+      "required": true
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    },
+    "excerpt": {
+      "type": "blocks"
+    },
+    "category": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "esports",
+        "gaming",
+        "gaming-news",
+        "sports-business",
+        "sports-college"
+      ]
+    },
+    "url": {
+      "type": "string"
+    },
+    "featured": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "message_collections",
+  "info": {
+    "singularName": "message-collection",
+    "pluralName": "message-collections",
+    "displayName": "Message Collection"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "subject": {
+      "type": "string",
+      "required": true
+    },
+    "message": {
+      "type": "blocks",
+      "required": true
+    }
+  }
+}
