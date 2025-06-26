@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_specialization_areas_of_expertises",
+  "info": {
+    "displayName": "Areas of Expertise",
+    "icon": "briefcase"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

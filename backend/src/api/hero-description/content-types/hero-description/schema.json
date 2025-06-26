@@ -1,0 +1,27 @@
+{
+  "kind": "singleType",
+  "collectionName": "hero_descriptions",
+  "info": {
+    "singularName": "hero-description",
+    "pluralName": "hero-descriptions",
+    "displayName": "Hero Description"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "specializations": {
+      "type": "dynamiczone",
+      "components": [
+        "specialization.areas-of-expertise"
+      ]
+    },
+    "featuredIn": {
+      "type": "dynamiczone",
+      "components": [
+        "featured-in.featured-in"
+      ]
+    }
+  }
+}

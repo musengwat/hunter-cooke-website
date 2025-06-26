@@ -16,9 +16,6 @@
       "required": true,
       "unique": true
     },
-    "description": {
-      "type": "string"
-    },
     "logo": {
       "type": "media",
       "multiple": true,
@@ -28,6 +25,16 @@
         "videos",
         "audios"
       ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "article_collections": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::article-collection.article-collection",
+      "private": true,
+      "mappedBy": "publication_collection"
     }
   }
 }

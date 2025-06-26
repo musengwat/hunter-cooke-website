@@ -2,50 +2,27 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
+const getLogo = (pub) => {
+  const logoURLPath = pub?.logo?.length > 0 && pub.logo[0].url;
+
+  if (logoURLPath) {
+    const logoURL = logoURLPath && `http://localhost:1337${logoURLPath}`;
+    return (
+      <img
+        src={logoURL}
+        alt={pub.name}
+        className="h-16 mx-auto mb-4 object-contain"
+      />
+    );
+  }
+  return;
+};
+
 const Publications = ({ publications }) => {
   const { ref, inView } = useInView({
     threshold: 0.1,
     triggerOnce: true,
   });
-
-  // Sample data for when Strapi isn't connected
-  const samplePublications = [
-    {
-      id: 1,
-      attributes: {
-        name: "Sports Business Journal",
-        description: "Staff writer covering the business of esports and gaming",
-        logo: "https://via.placeholder.com/200x80",
-      },
-    },
-    {
-      id: 2,
-      attributes: {
-        name: "SI.com",
-        description: "Contributing writer for sports and esports coverage",
-        logo: "https://via.placeholder.com/200x80",
-      },
-    },
-    {
-      id: 3,
-      attributes: {
-        name: "Netflix - Last Chance U",
-        description: "Contributing journalist for documentary series",
-        logo: "https://via.placeholder.com/200x80",
-      },
-    },
-    {
-      id: 4,
-      attributes: {
-        name: "Big 12 DieHards",
-        description: "Freelance coverage of Big 12 Conference athletics",
-        logo: "https://via.placeholder.com/200x80",
-      },
-    },
-  ];
-
-  const displayPublications =
-    publications.length > 0 ? publications : samplePublications;
 
   return (
     <section id="publications" className="section-padding bg-gray-50">
@@ -59,7 +36,7 @@ const Publications = ({ publications }) => {
           <h2 className="text-4xl font-bold text-center mb-12">Publications</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {displayPublications.map((pub, index) => (
+            {publications.map((pub, index) => (
               <motion.div
                 key={pub.id}
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -67,16 +44,12 @@ const Publications = ({ publications }) => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 text-center"
               >
-                <img
-                  src={pub.attributes.logo}
-                  alt={pub.attributes.name}
-                  className="h-16 mx-auto mb-4 object-contain"
-                />
+                {getLogo(pub)}
                 <h3 className="text-lg font-semibold mb-2">
-                  {pub.attributes.name}
+                  {pub.name || "Publication Name"}
                 </h3>
                 <p className="text-gray-600 text-sm">
-                  {pub.attributes.description}
+                  {pub.description || "Publication Description"}
                 </p>
               </motion.div>
             ))}

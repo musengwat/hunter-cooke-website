@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import axios from "axios";
 
-const Contact = () => {
+const Contact = ({ contactInfo }) => {
   const { ref, inView } = useInView({
     threshold: 0.1,
     triggerOnce: true,
@@ -55,8 +55,9 @@ const Contact = () => {
         >
           <h2 className="text-4xl font-bold text-center mb-8">Get In Touch</h2>
           <p className="text-center text-gray-600 mb-12">
-            I'm always interested in new opportunities, story ideas, and
-            connecting with fellow journalists.
+            {contactInfo?.description ||
+              `I'm always interested in new opportunities, story ideas, and
+            connecting with fellow journalists.`}
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -70,45 +71,34 @@ const Contact = () => {
                 <div>
                   <h4 className="font-medium text-gray-700">Email</h4>
                   <a
-                    href="mailto:hcooke@sportsbusinessjournal.com"
+                    href={`mailto:${contactInfo?.email}`}
                     className="text-secondary hover:underline"
                   >
-                    hcooke@sportsbusinessjournal.com
+                    {contactInfo?.email || "huntercooke4@gmail.com"}
                   </a>
                 </div>
 
                 <div>
                   <h4 className="font-medium text-gray-700">Location</h4>
-                  <p>Austin, Texas</p>
+                  <p>{contactInfo?.location || "Austin, Texas"}</p>
                 </div>
 
                 <div>
                   <h4 className="font-medium text-gray-700">Social Media</h4>
                   <div className="flex space-x-4 mt-2">
-                    <a
-                      href="https://twitter.com/huntercooke"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-secondary hover:text-blue-700"
-                    >
-                      Twitter
-                    </a>
-                    <a
-                      href="https://www.linkedin.com/in/huntercooke"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-secondary hover:text-blue-700"
-                    >
-                      LinkedIn
-                    </a>
-                    <a
-                      href="https://muckrack.com/huntercooke"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-secondary hover:text-blue-700"
-                    >
-                      Muck Rack
-                    </a>
+                    {contactInfo?.socialMedia?.map((social) => {
+                      return (
+                        <a
+                          key={`${social.platform}`}
+                          href={social.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-secondary hover:text-blue-700"
+                        >
+                          {social.platform}
+                        </a>
+                      );
+                    })}
                   </div>
                 </div>
               </div>

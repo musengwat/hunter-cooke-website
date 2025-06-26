@@ -410,6 +410,34 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAboutSectionAboutSection extends Struct.SingleTypeSchema {
+  collectionName: 'about_sections';
+  info: {
+    displayName: 'About Section';
+    pluralName: 'about-sections';
+    singularName: 'about-section';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    about: Schema.Attribute.Blocks;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::about-section.about-section'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiArticleCollectionArticleCollection
   extends Struct.CollectionTypeSchema {
   collectionName: 'article_collections';
@@ -422,10 +450,20 @@ export interface ApiArticleCollectionArticleCollection
     draftAndPublish: true;
   };
   attributes: {
-    category: Schema.Attribute.Enumeration<
-      ['esports', 'gaming', 'gaming-news', 'sports-business', 'sports-college']
-    > &
-      Schema.Attribute.Required;
+    category: Schema.Attribute.JSON &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<
+        'plugin::multi-select.multi-select',
+        [
+          'culture',
+          'esports',
+          'gaming',
+          'gaming-news',
+          'sports-business',
+          'sports-college',
+        ]
+      > &
+      Schema.Attribute.DefaultTo<'[]'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -438,7 +476,10 @@ export interface ApiArticleCollectionArticleCollection
       'api::article-collection.article-collection'
     > &
       Schema.Attribute.Private;
-    publication: Schema.Attribute.String & Schema.Attribute.Required;
+    publication_collection: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::publication-collection.publication-collection'
+    >;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
@@ -447,6 +488,71 @@ export interface ApiArticleCollectionArticleCollection
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     url: Schema.Attribute.String;
+  };
+}
+
+export interface ApiContactInformationContactInformation
+  extends Struct.SingleTypeSchema {
+  collectionName: 'contact_informations';
+  info: {
+    displayName: 'Contact Information';
+    pluralName: 'contact-informations';
+    singularName: 'contact-information';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<"I'm always interested in new opportunities, story ideas, and connecting with fellow journalists.">;
+    email: Schema.Attribute.Email;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contact-information.contact-information'
+    > &
+      Schema.Attribute.Private;
+    location: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    socialMedia: Schema.Attribute.DynamicZone<['social-media.social-media']>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiHeroDescriptionHeroDescription
+  extends Struct.SingleTypeSchema {
+  collectionName: 'hero_descriptions';
+  info: {
+    displayName: 'Hero Description';
+    pluralName: 'hero-descriptions';
+    singularName: 'hero-description';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    featuredIn: Schema.Attribute.DynamicZone<['featured-in.featured-in']>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hero-description.hero-description'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    specializations: Schema.Attribute.DynamicZone<
+      ['specialization.areas-of-expertise']
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -494,6 +600,11 @@ export interface ApiPublicationCollectionPublicationCollection
     draftAndPublish: true;
   };
   attributes: {
+    article_collections: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::article-collection.article-collection'
+    > &
+      Schema.Attribute.Private;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1028,7 +1139,10 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::about-section.about-section': ApiAboutSectionAboutSection;
       'api::article-collection.article-collection': ApiArticleCollectionArticleCollection;
+      'api::contact-information.contact-information': ApiContactInformationContactInformation;
+      'api::hero-description.hero-description': ApiHeroDescriptionHeroDescription;
       'api::message-collection.message-collection': ApiMessageCollectionMessageCollection;
       'api::publication-collection.publication-collection': ApiPublicationCollectionPublicationCollection;
       'plugin::content-releases.release': PluginContentReleasesRelease;

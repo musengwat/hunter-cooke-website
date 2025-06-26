@@ -2,7 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-scroll";
 
-const Hero = () => {
+const Hero = ({ heroInfo }) => {
+  console.log(heroInfo);
   return (
     <section
       id="hero"
@@ -24,17 +25,31 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-xl md:text-2xl mb-4 text-gray-300"
         >
-          Sports Journalist • Esports Expert • Sports Business Reporter
+          {/* Sports Journalist • Esports Expert • Sports Business Reporter */}
+          {heroInfo?.specializations.map((item, index) => (
+            <span key={index}>
+              {item.title}
+              {index < heroInfo.specializations.length - 1 ? " • " : ""}
+            </span>
+          ))}
         </motion.p>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-lg mb-8 text-gray-400"
-        >
-          Featured in SI.com, SBNation.com, and Netflix's "Last Chance U"
-        </motion.p>
+        {heroInfo?.featuredIn && (
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-lg mb-8 text-gray-400"
+          >
+            Featured in:{" "}
+            {heroInfo?.featuredIn.map((item, index) => (
+              <span key={index}>
+                {item.title}
+                {index < heroInfo.featuredIn.length - 1 ? ", " : ""}
+              </span>
+            ))}
+          </motion.p>
+        )}
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

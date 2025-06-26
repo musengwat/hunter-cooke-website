@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import { richTextStyles } from "../utils/richTextStyles.js";
 
 const Portfolio = ({ articles, loading }) => {
   const [filter, setFilter] = useState("all");
@@ -9,54 +11,15 @@ const Portfolio = ({ articles, loading }) => {
     triggerOnce: true,
   });
 
-  // Sample data for when Strapi isn't connected
-  const sampleArticles = [
-    {
-      id: 1,
-      attributes: {
-        title:
-          "GameSquare's Integration of Gaming Content Creators Sets New Industry Standard",
-        publication: "Sports Business Journal",
-        date: "2023-11-15",
-        excerpt:
-          "While esports-focused businesses have long targeted the reach of gaming content creators, no one has integrated them into the business quite like GameSquare.",
-        category: "esports",
-        url: "#",
-      },
-    },
-    {
-      id: 2,
-      attributes: {
-        title: "100 Thieves Launches Bank Heist in Fortnite's Unreal Editor",
-        publication: "Sports Business Journal",
-        date: "2023-10-20",
-        excerpt:
-          "100 Thieves president John Robinson tells SBJ that their Project X team is still focused on developing an in-house video game.",
-        category: "esports",
-        url: "#",
-      },
-    },
-    {
-      id: 3,
-      attributes: {
-        title: "Big 12's Push into Competitive Gaming",
-        publication: "Big 12 DieHards",
-        date: "2023-11-01",
-        excerpt:
-          "Conference officials see esports as key to engaging younger fans and creating new revenue streams.",
-        category: "college-sports",
-        url: "#",
-      },
-    },
-  ];
-
-  const displayArticles = articles.length > 0 ? articles : sampleArticles;
   const filteredArticles =
     filter === "all"
-      ? displayArticles
-      : displayArticles.filter(
-          (article) => article.attributes.category === filter
-        );
+      ? articles
+      : articles.filter((article) => article.category === Array(filter));
+
+  const uniqueCategories = [
+    "all",
+    ...Array.from(new Set(articles.map((a) => a.category[0]))),
+  ];
 
   return (
     <section id="portfolio" className="section-padding">
@@ -71,25 +34,23 @@ const Portfolio = ({ articles, loading }) => {
 
           {/* Filter Buttons */}
           <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {["all", "esports", "sports-business", "college-sports"].map(
-              (category) => (
-                <button
-                  key={category}
-                  onClick={() => setFilter(category)}
-                  className={`px-6 py-2 rounded-full transition-all duration-300 ${
-                    filter === category
-                      ? "bg-secondary text-white"
-                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                  }`}
-                >
-                  {category.charAt(0).toUpperCase() +
-                    category.slice(1).replace("-", " ")}
-                </button>
-              )
-            )}
+            {/* TODO fix filters */}
+            {uniqueCategories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setFilter(category)}
+                className={`px-6 py-2 rounded-full transition-all duration-300 ${
+                  filter === category
+                    ? "bg-secondary text-white"
+                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                }`}
+              >
+                {category?.charAt(0).toUpperCase() +
+                  category?.slice(1).replace("-", " ")}
+              </button>
+            ))}
           </div>
 
-          {/* Articles Grid */}
           {loading ? (
             <div className="text-center">Loading articles...</div>
           ) : (
@@ -100,27 +61,30 @@ const Portfolio = ({ articles, loading }) => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300"
+                  className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 flex flex-col h-full"
                 >
-                  <div className="text-accent font-semibold text-sm mb-2">
-                    {article.attributes.publication}
-                  </div>
                   <h3 className="text-xl font-bold mb-3 text-primary">
                     <a
-                      href={article.attributes.url}
+                      href={article.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:text-secondary transition-colors"
                     >
-                      {article.attributes.title}
+                      {article.title}
                     </a>
                   </h3>
-                  <p className="text-gray-600 mb-4">
-                    {article.attributes.excerpt}
-                  </p>
-                  <time className="text-sm text-gray-500">
-                    {new Date(article.attributes.date).toLocaleDateString()}
-                  </time>
+                  <BlocksRenderer
+                    content={article.excerpt}
+                    blocks={richTextStyles}
+                  />
+                  <div className="mt-auto flex items-center justify-between text-sm w-full pt-4 border-t border-gray-100">
+                    <span className="text-accent font-semibold">
+                      {article.publication_collection?.name}
+                    </span>
+                    <time className="text-gray-500">
+                      {new Date(article.date).toLocaleDateString()}
+                    </time>
+                  </div>
                 </motion.article>
               ))}
             </div>

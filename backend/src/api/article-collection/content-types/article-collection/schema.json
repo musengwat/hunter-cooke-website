@@ -16,33 +16,38 @@
       "required": true,
       "unique": true
     },
-    "publication": {
-      "type": "string",
-      "required": true
-    },
     "date": {
       "type": "date",
       "required": true
     },
-    "excerpt": {
-      "type": "blocks"
+    "featured": {
+      "type": "boolean"
+    },
+    "publication_collection": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::publication-collection.publication-collection",
+      "inversedBy": "article_collections"
+    },
+    "url": {
+      "type": "string"
     },
     "category": {
-      "type": "enumeration",
-      "required": true,
-      "enum": [
+      "type": "customField",
+      "customField": "plugin::multi-select.multi-select",
+      "default": "[]",
+      "options": [
+        "culture",
         "esports",
         "gaming",
         "gaming-news",
         "sports-business",
         "sports-college"
-      ]
+      ],
+      "required": true
     },
-    "url": {
-      "type": "string"
-    },
-    "featured": {
-      "type": "boolean"
+    "excerpt": {
+      "type": "blocks"
     }
   }
 }
