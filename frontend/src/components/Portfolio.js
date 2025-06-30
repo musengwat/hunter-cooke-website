@@ -5,7 +5,8 @@ import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { richTextStyles } from "../utils/constants.js";
 
 const Portfolio = ({ articles, loading }) => {
-  const [filter, setFilter] = useState("all");
+  // const [filter, setFilter] = useState("all");
+  const filter = "all";
   const { ref, inView } = useInView({
     threshold: 0.1,
     triggerOnce: true,
@@ -16,10 +17,10 @@ const Portfolio = ({ articles, loading }) => {
       ? articles
       : articles.filter((article) => article.category === Array(filter));
 
-  const uniqueCategories = [
-    "all",
-    ...Array.from(new Set(articles.map((a) => a.category[0]))),
-  ];
+  // const uniqueCategories = [
+  //   "all",
+  //   ...Array.from(new Set(articles.map((a) => a.category[0]))),
+  // ];
 
   return (
     <section id="portfolio" className="section-padding">
