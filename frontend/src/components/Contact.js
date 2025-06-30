@@ -37,7 +37,7 @@ const Contact = ({ contactInfo }) => {
     setStatus("sending");
 
     try {
-      await axios.post(`${apiURL}/api/messages`, {
+      await axios.post(`${apiURL}/api/message-collections`, {
         data: formData,
       });
 
