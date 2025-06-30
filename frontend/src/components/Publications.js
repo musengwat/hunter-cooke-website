@@ -7,8 +7,9 @@ const getLogo = (pub) => {
   const logoURLPath = pub?.logo?.length > 0 && pub.logo[0].url;
 
   if (logoURLPath) {
-    const logoURL = logoURLPath && `${apiURL}${logoURLPath}`;
-    console.log("Logo URL:", logoURL);
+    const logoURL = logoURLPath.startsWith("http")
+      ? logoURLPath
+      : `${apiURL}${logoURLPath}`;
     return (
       <img
         src={logoURL}
