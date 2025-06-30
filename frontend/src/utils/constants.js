@@ -43,4 +43,4 @@ export const richTextStyles = {
   ),
 };
 
-export const apiURL = process.env.API_URL;
+export const apiURL = "https://funny-power-054eb40c79.strapiapp.com";
