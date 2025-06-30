@@ -29,10 +29,11 @@ const Contact = ({ contactInfo }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("sending");
-
+    console.log("Sending form data:", formData);
     try {
       // Send to Strapi
-      await axios.post(`${apiURL}/api/messages`, {
+      console.log("axios formData:", formData);
+      await axios.post(`${apiURL}/api/message-collections`, {
         data: formData,
       });
 
