@@ -33,8 +33,7 @@ const Portfolio = ({ articles, loading }) => {
           <h2 className="text-4xl font-bold text-center mb-8">Portfolio</h2>
 
           {/* Filter Buttons */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {/* TODO fix filters */}
+          {/* <div className="flex flex-wrap justify-center gap-4 mb-12">
             {uniqueCategories.map((category) => (
               <button
                 key={category}
@@ -49,7 +48,7 @@ const Portfolio = ({ articles, loading }) => {
                   category?.slice(1).replace("-", " ")}
               </button>
             ))}
-          </div>
+          </div> */}
 
           {loading ? (
             <div className="text-center">Loading articles...</div>
