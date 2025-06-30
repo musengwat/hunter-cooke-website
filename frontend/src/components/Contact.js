@@ -1,10 +1,16 @@
 import axios from "axios";
+import emailjs from "@emailjs/browser";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { apiURL } from "../utils/constants";
 
+const EMAILJS_SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
+
 const Contact = ({ contactInfo }) => {
+  const emailAddress = contactInfo?.email || "huntercooke4@gmail.com";
   const { ref, inView } = useInView({
     threshold: 0.1,
     triggerOnce: true,
@@ -29,18 +35,30 @@ const Contact = ({ contactInfo }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("sending");
-    console.log("Sending form data:", formData);
+
     try {
-      // Send to Strapi
-      console.log("axios formData:", formData);
-      await axios.post(`${apiURL}/api/message-collections`, {
+      await axios.post(`${apiURL}/api/messages`, {
         data: formData,
       });
+
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          to_email: emailAddress,
+        },
+        EMAILJS_PUBLIC_KEY
+      );
 
       setStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
       setTimeout(() => setStatus(""), 5000);
     } catch (error) {
+      console.error("Error:", error);
       setStatus("error");
       setTimeout(() => setStatus(""), 5000);
     }
@@ -76,7 +94,7 @@ const Contact = ({ contactInfo }) => {
                     href={`mailto:${contactInfo?.email}`}
                     className="text-secondary hover:underline"
                   >
-                    {contactInfo?.email || "huntercooke4@gmail.com"}
+                    {emailAddress}
                   </a>
                 </div>
 
