@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { motion } from "framer-motion";
 import Navigation from "./components/Navigation";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Portfolio from "./components/Portfolio";
 import Publications from "./components/Publications";
 import Contact from "./components/Contact";
+import { apiURL } from "./utils/constants";
 import "./App.css";
-
-const apiPath = "http://localhost:1337/";
 
 const fetchDataByType = async (dataType: string) => {
   try {
-    const response = await axios.get(`${apiPath}api/${dataType}?populate=*`);
+    const response = await axios.get(`${apiURL}/api/${dataType}?populate=*`);
     return response.data.data;
   } catch (error) {
     console.error(`Error fetching ${dataType}:`, error);
@@ -29,18 +27,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch data from Strapi
     const fetchData = async () => {
-      // const aboutData = await fetchDataByType("about-section");
-      // const articlesData = await fetchDataByType("article-collections");
-      // const contactData = await fetchDataByType("contact-information");
-      // const heroData = await fetchDataByType("hero-description");
-      // const publicationsData = await fetchDataByType("publication-collections");
-      // setAboutInfo(aboutData);
-      // setArticles(articlesData);
-      // setContactInfo(contactData);
-      // setHeroInfo(heroData);
-      // setPublications(publicationsData);
       setAboutInfo(await fetchDataByType("about-section"));
       setArticles(await fetchDataByType("article-collections"));
       setContactInfo(await fetchDataByType("contact-information"));

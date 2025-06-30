@@ -1,12 +1,14 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { apiURL } from "../utils/constants";
 
 const getLogo = (pub) => {
   const logoURLPath = pub?.logo?.length > 0 && pub.logo[0].url;
 
   if (logoURLPath) {
-    const logoURL = logoURLPath && `http://localhost:1337${logoURLPath}`;
+    const logoURL = logoURLPath && `${apiURL}${logoURLPath}`;
+    console.log("Logo URL:", logoURL);
     return (
       <img
         src={logoURL}

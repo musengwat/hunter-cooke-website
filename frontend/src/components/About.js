@@ -1,9 +1,8 @@
-import React from "react";
 import dayjs from "dayjs";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
-import { richTextStyles } from "../utils/richTextStyles.js";
+import { richTextStyles } from "../utils/constants.js";
 
 const About = ({ aboutInfo, publicationCount }) => {
   const { ref, inView } = useInView({

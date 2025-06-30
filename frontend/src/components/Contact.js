@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import axios from "axios";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import axios from "axios";
+import { apiURL } from "../utils/constants";
 
 const Contact = ({ contactInfo }) => {
   const { ref, inView } = useInView({
@@ -31,7 +32,7 @@ const Contact = ({ contactInfo }) => {
 
     try {
       // Send to Strapi
-      await axios.post("http://localhost:1337/api/messages", {
+      await axios.post(`${apiURL}/api/messages`, {
         data: formData,
       });
 
