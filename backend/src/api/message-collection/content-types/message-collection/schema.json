@@ -24,7 +24,7 @@
       "required": true
     },
     "message": {
-      "type": "blocks",
+      "type": "string",
       "required": true
     }
   }

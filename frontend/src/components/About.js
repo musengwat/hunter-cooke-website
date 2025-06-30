@@ -9,7 +9,6 @@ const About = ({ aboutInfo, publicationCount }) => {
     threshold: 0.1,
     triggerOnce: true,
   });
-  console.log(publicationCount);
   return (
     <section id="about" className="section-padding bg-gray-50">
       <div className="max-w-4xl mx-auto">

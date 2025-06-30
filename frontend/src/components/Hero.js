@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { Link } from "react-scroll";
 
 const Hero = ({ heroInfo }) => {
-  console.log(heroInfo);
   return (
     <section
       id="hero"
