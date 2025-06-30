@@ -84,24 +84,26 @@ const Contact = ({ contactInfo }) => {
                   <p>{contactInfo?.location || "Austin, Texas"}</p>
                 </div>
 
-                <div>
-                  <h4 className="font-medium text-gray-700">Social Media</h4>
-                  <div className="flex space-x-4 mt-2">
-                    {contactInfo?.socialMedia?.map((social) => {
-                      return (
-                        <a
-                          key={`${social.platform}`}
-                          href={social.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-secondary hover:text-blue-700"
-                        >
-                          {social.platform}
-                        </a>
-                      );
-                    })}
+                {contactInfo?.socialMedia && (
+                  <div>
+                    <h4 className="font-medium text-gray-700">Social Media</h4>
+                    <div className="flex space-x-4 mt-2 justify-center">
+                      {contactInfo?.socialMedia?.map((social) => {
+                        return (
+                          <a
+                            key={`${social.platform}`}
+                            href={social.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-secondary hover:text-blue-700"
+                          >
+                            {social.platform}
+                          </a>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
 
