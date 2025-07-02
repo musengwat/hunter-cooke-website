@@ -4,7 +4,7 @@ import { useInView } from "react-intersection-observer";
 import { apiURL } from "../utils/constants";
 
 const getLogo = (pub) => {
-  const logoURLPath = pub?.logo?.length > 0 && pub.logo[0].url;
+  const logoURLPath = pub?.logo?.length > 0 && pub?.logo[0]?.url;
 
   if (logoURLPath) {
     const logoURL = logoURLPath.startsWith("http")
@@ -13,7 +13,7 @@ const getLogo = (pub) => {
     return (
       <img
         src={logoURL}
-        alt={pub.name}
+        alt={pub?.name}
         className="h-16 mx-auto mb-4 object-contain"
       />
     );
@@ -49,10 +49,10 @@ const Publications = ({ publications }) => {
               >
                 {getLogo(pub)}
                 <h3 className="text-lg font-semibold mb-2">
-                  {pub.name || "Publication Name"}
+                  {pub?.name || "Publication Name"}
                 </h3>
                 <p className="text-gray-600 text-sm">
-                  {pub.description || "Publication Description"}
+                  {pub?.description || "Publication Description"}
                 </p>
               </motion.div>
             ))}

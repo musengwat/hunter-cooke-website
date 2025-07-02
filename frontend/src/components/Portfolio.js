@@ -12,9 +12,9 @@ const Portfolio = ({ articles, loading }) => {
   });
 
   const filteredArticles =
-    filter === "all"
+    articles && filter === "all"
       ? articles
-      : articles.filter((article) => article.category === Array(filter));
+      : articles.filter((article) => article?.category === Array(filter));
 
   // const uniqueCategories = [
   //   "all",
@@ -56,7 +56,7 @@ const Portfolio = ({ articles, loading }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredArticles.map((article, index) => (
                 <motion.article
-                  key={article.id}
+                  key={article?.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -64,24 +64,24 @@ const Portfolio = ({ articles, loading }) => {
                 >
                   <h3 className="text-xl font-bold mb-3 text-primary">
                     <a
-                      href={article.url}
+                      href={article?.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:text-secondary transition-colors"
                     >
-                      {article.title}
+                      {article?.title}
                     </a>
                   </h3>
                   <BlocksRenderer
-                    content={article.excerpt}
+                    content={article?.excerpt}
                     blocks={richTextStyles}
                   />
                   <div className="mt-auto flex items-center justify-between text-sm w-full pt-4 border-t border-gray-100">
                     <span className="text-accent font-semibold">
-                      {article.publication_collection?.name}
+                      {article?.publication_collection?.name}
                     </span>
                     <time className="text-gray-500">
-                      {new Date(article.date).toLocaleDateString()}
+                      {new Date(article?.date).toLocaleDateString()}
                     </time>
                   </div>
                 </motion.article>

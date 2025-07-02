@@ -110,13 +110,13 @@ const Contact = ({ contactInfo }) => {
                       {contactInfo?.socialMedia?.map((social) => {
                         return (
                           <a
-                            key={`${social.platform}`}
-                            href={social.url}
+                            key={`${social?.platform}`}
+                            href={social?.url}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-secondary hover:text-blue-700"
                           >
-                            {social.platform}
+                            {social?.platform}
                           </a>
                         );
                       })}

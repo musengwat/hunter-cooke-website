@@ -24,10 +24,10 @@ const Hero = ({ heroInfo }) => {
           className="text-xl md:text-2xl mb-4 text-gray-300"
         >
           {/* Sports Journalist • Esports Expert • Sports Business Reporter */}
-          {heroInfo?.specializations.map((item, index) => (
+          {heroInfo?.specializations?.map((item, index) => (
             <span key={index}>
-              {item.title}
-              {index < heroInfo.specializations.length - 1 ? " • " : ""}
+              {item?.title}
+              {index < heroInfo?.specializations?.length - 1 ? " • " : ""}
             </span>
           ))}
         </motion.p>
@@ -40,10 +40,10 @@ const Hero = ({ heroInfo }) => {
             className="text-lg mb-8 text-gray-400"
           >
             Featured in:{" "}
-            {heroInfo?.featuredIn.map((item, index) => (
+            {heroInfo?.featuredIn?.map((item, index) => (
               <span key={index}>
-                {item.title}
-                {index < heroInfo.featuredIn.length - 1 ? ", " : ""}
+                {item?.title}
+                {index < heroInfo?.featuredIn?.length - 1 ? ", " : ""}
               </span>
             ))}
           </motion.p>

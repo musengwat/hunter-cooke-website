@@ -19,6 +19,7 @@
     "logo": {
       "type": "media",
       "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
@@ -27,7 +28,8 @@
       ]
     },
     "description": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "article_collections": {
       "type": "relation",
