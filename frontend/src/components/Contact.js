@@ -45,11 +45,13 @@ const Contact = ({ contactInfo }) => {
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         {
+          to_name: "Hunter Cooke",
+          to_email: emailAddress,
           from_name: formData.name,
           from_email: formData.email,
           subject: formData.subject,
           message: formData.message,
-          to_email: emailAddress,
+          timestamp: new Date().toLocaleString(),
         },
         EMAILJS_PUBLIC_KEY
       );
